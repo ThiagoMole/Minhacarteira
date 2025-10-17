@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +12,7 @@
     .card {
       transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
+
     .card:hover {
       transform: translateY(-6px);
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
@@ -22,22 +24,38 @@
         opacity: 0;
         transform: translateY(-20px);
       }
+
       100% {
         opacity: 1;
         transform: translateY(0);
       }
     }
+
     .animate-slide-fade {
       opacity: 0;
       animation: slideFadeIn 0.6s ease-out forwards;
     }
 
     /* Delays para o efeito em cascata */
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-    .delay-3 { animation-delay: 0.3s; }
-    .delay-4 { animation-delay: 0.4s; }
-    .delay-5 { animation-delay: 0.5s; }
+    .delay-1 {
+      animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+      animation-delay: 0.3s;
+    }
+
+    .delay-4 {
+      animation-delay: 0.4s;
+    }
+
+    .delay-5 {
+      animation-delay: 0.5s;
+    }
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -47,13 +65,16 @@
 
   <div class="w-full max-w-6xl px-4 sm:px-6 lg:px-8">
     <!-- Título -->
-    <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 text-gray-300 animate-slide-fade delay-1 text-center md:text-left">Minha Carteira</h1>
+    <h1
+      class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 text-gray-300 animate-slide-fade delay-1 text-center md:text-left">
+      Minha Carteira</h1>
 
     <!-- Cards superiores -->
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
       <!-- Saldo -->
       <div class="card rounded-3xl animate-slide-fade delay-2">
-        <div class="bg-gradient-to-br from-[#0b1d17] to-[#10372c] rounded-3xl p-6 sm:p-8 border border-[#1f5b46] shadow-lg">
+        <div
+          class="bg-gradient-to-br from-[#0b1d17] to-[#10372c] rounded-3xl p-6 sm:p-8 border border-[#1f5b46] shadow-lg">
           <div class="flex justify-between items-center mb-3 relative">
             <h2 class="text-gray-400 text-lg sm:text-xl">Saldo</h2>
 
@@ -61,21 +82,27 @@
             <div class="relative">
               <button id="dropdownSaldoBtn" class="text-gray-400 text-sm flex items-center gap-1 cursor-pointer">
                 <span id="selectedPeriodoSaldo">Este mês</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div id="dropdownSaldo" class="hidden absolute right-0 mt-2 bg-[#0d1a15] rounded-md shadow-lg border border-[#1f5b46] z-10">
-                <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Este mês">Este mês</button>
-                <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Último mês">Último mês</button>
-                <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Últimos 3 meses">Últimos 3 meses</button>
+              <div id="dropdownSaldo"
+                class="hidden absolute right-0 mt-2 bg-[#0d1a15] rounded-md shadow-lg border border-[#1f5b46] z-10">
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Este mês">Este
+                  mês</button>
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Último mês">Último
+                  mês</button>
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Últimos 3 meses">Últimos
+                  3 meses</button>
               </div>
             </div>
           </div>
 
           <p class="text-3xl sm:text-4xl md:text-5xl font-bold text-emerald-400 mb-2" id="saldoValor">R$16.550,00</p>
           <p class="text-emerald-400 text-xs sm:text-sm flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
             <span id="saldoPorcentagem">14%</span>
@@ -86,7 +113,8 @@
 
       <!-- Investimentos -->
       <div class="card rounded-3xl animate-slide-fade delay-3">
-        <div class="bg-gradient-to-br from-[#1a0f0f] to-[#250909] rounded-3xl p-6 sm:p-8 border border-[#5a1717] shadow-lg">
+        <div
+          class="bg-gradient-to-br from-[#1a0f0f] to-[#250909] rounded-3xl p-6 sm:p-8 border border-[#5a1717] shadow-lg">
           <div class="flex justify-between items-center mb-3 relative">
             <h2 class="text-gray-400 text-lg sm:text-xl">Investimentos</h2>
 
@@ -94,21 +122,27 @@
             <div class="relative">
               <button id="dropdownInvestBtn" class="text-gray-400 text-sm flex items-center gap-1 cursor-pointer">
                 <span id="selectedPeriodoInvest">Este mês</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div id="dropdownInvest" class="hidden absolute right-0 mt-2 bg-[#1a0f0f] rounded-md shadow-lg border border-[#5a1717] z-10">
-                <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Este mês">Este mês</button>
-                <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Último mês">Último mês</button>
-                <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Últimos 3 meses">Últimos 3 meses</button>
+              <div id="dropdownInvest"
+                class="hidden absolute right-0 mt-2 bg-[#1a0f0f] rounded-md shadow-lg border border-[#5a1717] z-10">
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Este mês">Este
+                  mês</button>
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Último mês">Último
+                  mês</button>
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Últimos 3 meses">Últimos
+                  3 meses</button>
               </div>
             </div>
           </div>
 
           <p class="text-3xl sm:text-4xl md:text-5xl font-bold text-red-600 mb-2" id="investValor">R$177.650,00</p>
           <p class="text-red-600 text-xs sm:text-sm flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 rotate-180" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
             <span id="investPorcentagem">-7,5%</span>
@@ -124,7 +158,8 @@
       <div class="card bg-[#0f1512] rounded-3xl p-6 sm:p-8 border border-[#1c2a24] shadow-md text-center">
         <h2 class="text-xl sm:text-2xl text-gray-300 mb-2">Ganhos</h2>
         <p class="text-gray-400 mb-4 sm:mb-6">Registre aqui todas as suas entradas</p>
-        <button id="btnGanhos" class="bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3 rounded-lg">
+        <button id="btnGanhos"
+          class="bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3 rounded-lg">
           Adicionar Ganhos
         </button>
       </div>
@@ -133,7 +168,8 @@
       <div class="card bg-[#0f1512] rounded-3xl p-6 sm:p-8 border border-[#1c2a24] shadow-md text-center">
         <h2 class="text-xl sm:text-2xl text-gray-300 mb-2">Despesas</h2>
         <p class="text-gray-400 mb-4 sm:mb-6">Registre aqui todas as suas despesas</p>
-        <button id="btnDespesas" class="bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3 rounded-lg">
+        <button id="btnDespesas"
+          class="bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3 rounded-lg">
           Adicionar Despesas
         </button>
       </div>
@@ -142,22 +178,24 @@
       <div class="card bg-[#0f1512] rounded-3xl p-6 sm:p-8 border border-[#1c2a24] shadow-md text-center">
         <h2 class="text-xl sm:text-2xl text-gray-300 mb-2">Investir</h2>
         <p class="text-gray-400 mb-4 sm:mb-6">Registre aqui todos os seus investimentos</p>
-        <button id="btnInvestir" class="bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3 rounded-lg">
+        <button id="btnInvestir"
+          class="bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3 rounded-lg">
           Adicionar Investimentos
         </button>
       </div>
     </div>
   </div>
 
-   <!-- Gráfico de área compacto -->
-    <div class="animate-slide-fade delay-4 mb-12 flex justify-center">
-      <div class="bg-[#0f1512] border border-[#1c2a24] rounded-3xl shadow-md p-4 sm:p-6 w-full sm:w-[90%] md:w-[80%] lg:w-[70%]">
-        <h2 class="text-xl text-gray-300 mb-4 text-center">Evolução da Carteira</h2>
-        <div class="h-[180px] sm:h-[220px] md:h-[250px]">
-          <canvas id="graficoCarteira"></canvas>
-        </div>
+  <!-- Gráfico de área compacto -->
+  <div class="animate-slide-fade delay-4 mb-12 flex justify-center">
+    <div
+      class="bg-[#0f1512] border border-[#1c2a24] rounded-3xl shadow-md p-4 sm:p-6 w-full sm:w-[90%] md:w-[80%] lg:w-[70%]">
+      <h2 class="text-xl text-gray-300 mb-4 text-center">Evolução da Carteira</h2>
+      <div class="h-[180px] sm:h-[220px] md:h-[250px]">
+        <canvas id="graficoCarteira"></canvas>
       </div>
     </div>
+  </div>
 
   <!-- Scripts JS -->
   <script>
@@ -239,4 +277,5 @@
   </script>
 
 </body>
+
 </html>
