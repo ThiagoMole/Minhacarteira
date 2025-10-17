@@ -118,16 +118,6 @@
       </div>
     </div>
 
-    <!-- Gráfico de área compacto -->
-    <div class="animate-slide-fade delay-4 mb-12 flex justify-center">
-      <div class="bg-[#0f1512] border border-[#1c2a24] rounded-3xl shadow-md p-4 sm:p-6 w-full sm:w-[90%] md:w-[80%] lg:w-[70%]">
-        <h2 class="text-xl text-gray-300 mb-4 text-center">Evolução da Carteira</h2>
-        <div class="h-[180px] sm:h-[220px] md:h-[250px]">
-          <canvas id="graficoCarteira"></canvas>
-        </div>
-      </div>
-    </div>
-
     <!-- Cards inferiores -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 animate-slide-fade delay-5 mb-12">
       <!-- Ganhos -->
@@ -158,6 +148,16 @@
       </div>
     </div>
   </div>
+
+   <!-- Gráfico de área compacto -->
+    <div class="animate-slide-fade delay-4 mb-12 flex justify-center">
+      <div class="bg-[#0f1512] border border-[#1c2a24] rounded-3xl shadow-md p-4 sm:p-6 w-full sm:w-[90%] md:w-[80%] lg:w-[70%]">
+        <h2 class="text-xl text-gray-300 mb-4 text-center">Evolução da Carteira</h2>
+        <div class="h-[180px] sm:h-[220px] md:h-[250px]">
+          <canvas id="graficoCarteira"></canvas>
+        </div>
+      </div>
+    </div>
 
   <!-- Scripts JS -->
   <script>
