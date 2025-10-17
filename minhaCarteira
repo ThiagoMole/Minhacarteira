@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minha Carteira</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* --- Efeito Hover dos Cards --- */
+    .card {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    /* --- Animação de entrada (descendo + fade) --- */
+    @keyframes slideFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-slide-fade {
+      opacity: 0;
+      animation: slideFadeIn 0.6s ease-out forwards;
+    }
+
+    /* Delays para o efeito em cascata */
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+  </style>
+</head>
+
+<body class="bg-[#020904] text-gray-200 font-sans min-h-screen flex flex-col items-center py-12">
+
+  <div class="w-full max-w-6xl px-6">
+    <!-- Título -->
+    <h1 class="text-5xl font-semibold mb-10 text-gray-300 animate-slide-fade delay-1">Minha Carteira</h1>
+
+    <!-- Cards superiores -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+      <!-- Saldo -->
+      <div class="card rounded-3xl animate-slide-fade delay-2">
+        <div class="bg-gradient-to-br from-[#0b1d17] to-[#10372c] rounded-3xl p-8 border border-[#1f5b46] shadow-lg">
+          <div class="flex justify-between items-center mb-3 relative">
+            <h2 class="text-gray-400 text-xl">Saldo</h2>
+
+            <!-- Dropdown -->
+            <div class="relative">
+              <button id="dropdownSaldoBtn" class="text-gray-400 text-sm flex items-center gap-1 cursor-pointer">
+                <span id="selectedPeriodoSaldo">Este mês</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div id="dropdownSaldo"
+                class="hidden absolute right-0 mt-2 bg-[#0d1a15] rounded-md shadow-lg border border-[#1f5b46] z-10">
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Este mês">Este mês</button>
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Último mês">Último mês</button>
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Últimos 3 meses">Últimos 3 meses</button>
+              </div>
+            </div>
+          </div>
+
+          <p class="text-4xl md:text-5xl font-bold text-emerald-400 mb-2" id="saldoValor">R$16.550,00</p>
+          <p class="text-emerald-400 text-sm flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+            <span id="saldoPorcentagem">14%</span>
+            <span class="text-gray-400" id="saldoVariacao">+R$2.576,00 este mês</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Investimentos -->
+      <div class="card rounded-3xl animate-slide-fade delay-3">
+        <div class="bg-gradient-to-br from-[#1a0f0f] to-[#250909] rounded-3xl p-8 border border-[#5a1717] shadow-lg">
+          <div class="flex justify-between items-center mb-3 relative">
+            <h2 class="text-gray-400 text-xl">Investimentos</h2>
+
+            <!-- Dropdown -->
+            <div class="relative">
+              <button id="dropdownInvestBtn" class="text-gray-400 text-sm flex items-center gap-1 cursor-pointer">
+                <span id="selectedPeriodoInvest">Este mês</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div id="dropdownInvest"
+                class="hidden absolute right-0 mt-2 bg-[#1a0f0f] rounded-md shadow-lg border border-[#5a1717] z-10">
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Este mês">Este mês</button>
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Último mês">Último mês</button>
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Últimos 3 meses">Últimos 3 meses</button>
+              </div>
+            </div>
+          </div>
+
+          <p class="text-4xl md:text-5xl font-bold text-red-600 mb-2" id="investValor">R$177.650,00</p>
+          <p class="text-red-600 text-sm flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 rotate-180" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+            <span id="investPorcentagem">-7,5%</span>
+            <span class="text-gray-400" id="investVariacao">neste mês</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards inferiores -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 animate-slide-fade delay-4 position: fixed bottom-12">
+      <!-- Ganhos -->
+      <div class="card bg-[#0f1512] rounded-3xl p-8 border border-[#1c2a24] shadow-md text-center">
+        <h2 class="text-2xl text-gray-300 mb-2">Ganhos</h2>
+        <p class="text-gray-400 mb-6">Registre aqui todas as suas entradas</p>
+        <button id="btnGanhos"
+          class="bg-emerald-600 hover:bg-emerald-700 transition text-black px-6 py-2 rounded-lg">
+          Adicionar Ganhos
+        </button>
+      </div>
+
+      <!-- Despesas -->
+      <div class="card bg-[#0f1512] rounded-3xl p-8 border border-[#1c2a24] shadow-md text-center">
+        <h2 class="text-2xl text-gray-300 mb-2">Despesas</h2>
+        <p class="text-gray-400 mb-6">Registre aqui todas as suas despesas</p>
+        <button id="btnDespesas"
+          class="bg-emerald-600 hover:bg-emerald-700 transition text-black px-6 py-2 rounded-lg">
+          Adicionar Despesas
+        </button>
+      </div>
+
+      <!-- Investir -->
+      <div class="card bg-[#0f1512] rounded-3xl p-8 border border-[#1c2a24] shadow-md text-center">
+        <h2 class="text-2xl text-gray-300 mb-2">Investir</h2>
+        <p class="text-gray-400 mb-6">Registre aqui todos os seus investimentos</p>
+        <button id="btnInvestir"
+          class="bg-emerald-600 hover:bg-emerald-700 transition text-black px-6 py-2 rounded-lg">
+          Adicionar Investimentos
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Script JS -->
+  <script>
+    // Dropdowns
+    const dropdowns = [
+      { button: "dropdownSaldoBtn", menu: "dropdownSaldo", selected: "selectedPeriodoSaldo" },
+      { button: "dropdownInvestBtn", menu: "dropdownInvest", selected: "selectedPeriodoInvest" },
+    ];
+
+    dropdowns.forEach(d => {
+      const btn = document.getElementById(d.button);
+      const menu = document.getElementById(d.menu);
+      const selected = document.getElementById(d.selected);
+
+      btn.addEventListener("click", () => menu.classList.toggle("hidden"));
+
+      menu.querySelectorAll("button").forEach(option => {
+        option.addEventListener("click", () => {
+          selected.textContent = option.dataset.value;
+          menu.classList.add("hidden");
+        });
+      });
+
+      document.addEventListener("click", e => {
+        if (!menu.contains(e.target) && !btn.contains(e.target)) {
+          menu.classList.add("hidden");
+        }
+      });
+    });
+
+    // Botões principais (exemplo futuro para modais)
+    document.getElementById("btnGanhos").addEventListener("click", () => {
+      alert("Abrir modal para adicionar ganhos 💰");
+    });
+    document.getElementById("btnDespesas").addEventListener("click", () => {
+      alert("Abrir modal para adicionar despesas 💸");
+    });
+    document.getElementById("btnInvestir").addEventListener("click", () => {
+      alert("Abrir modal para adicionar investimentos 📈");
+    });
+  </script>
+
+</body>
+</html>
