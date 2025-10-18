@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Minha Carteira</title>
+  <title class="">Minha Carteira</title>
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -66,7 +66,7 @@
   <div class="w-full max-w-6xl px-4 sm:px-6 lg:px-8">
     <!-- Título -->
     <h1
-      class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 text-gray-300 animate-slide-fade delay-1 text-center md:text-left">
+      class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 text-gray-300 animate-slide-fade delay-1 text-center md:text-left ">
       Minha Carteira</h1>
 
     <!-- Cards superiores -->
@@ -209,116 +209,169 @@
 
   <!-- Scripts JS -->
   <script>
-    // Valores simulados para cada período
-    const dadosSaldo = {
-      "Este mês": { valor: "R$16.550,00", porcentagem: "14%", variacao: "+R$2.576,00 este mês" },
-      "Último mês": { valor: "R$14.980,00", porcentagem: "10%", variacao: "+R$1.500,00 último mês" },
-      "Últimos 3 meses": { valor: "R$45.200,00", porcentagem: "8%", variacao: "+R$3.350,00 últimos 3 meses" }
-    };
+  // Valores simulados para cada período
+  const dadosSaldo = {
+    "Este mês": { valor: "R$16.550,00", porcentagem: "14%", variacao: "+R$2.576,00 este mês" },
+    "Último mês": { valor: "R$14.980,00", porcentagem: "10%", variacao: "+R$1.500,00 último mês" },
+    "Últimos 3 meses": { valor: "R$45.200,00", porcentagem: "8%", variacao: "+R$3.350,00 últimos 3 meses" }
+  };
 
-    const dadosInvestimentos = {
-      "Este mês": { valor: "R$177.650,00", porcentagem: "-7,5%", variacao: "neste mês" },
-      "Último mês": { valor: "R$180.000,00", porcentagem: "-2%", variacao: "último mês" },
-      "Últimos 3 meses": { valor: "R$185.500,00", porcentagem: "+3,2%", variacao: "últimos 3 meses" }
-    };
+  const dadosInvestimentos = {
+    "Este mês": { valor: "R$177.650,00", porcentagem: "-7,5%", variacao: "neste mês" },
+    "Último mês": { valor: "R$180.000,00", porcentagem: "-2%", variacao: "último mês" },
+    "Últimos 3 meses": { valor: "R$185.500,00", porcentagem: "+3,2%", variacao: "últimos 3 meses" }
+  };
 
-    // Dropdowns com atualização de valores
-    const dropdowns = [
-      {
-        button: "dropdownSaldoBtn",
-        menu: "dropdownSaldo",
-        selected: "selectedPeriodoSaldo",
-        dados: dadosSaldo,
-        valorId: "saldoValor",
-        porcentId: "saldoPorcentagem",
-        variacaoId: "saldoVariacao"
-      },
-      {
-        button: "dropdownInvestBtn",
-        menu: "dropdownInvest",
-        selected: "selectedPeriodoInvest",
-        dados: dadosInvestimentos,
-        valorId: "investValor",
-        porcentId: "investPorcentagem",
-        variacaoId: "investVariacao"
-      },
-    ];
+  // Função pra converter "R$177.650,00" em número
+  const parseValor = (str) => Number(str.replace(/[R$\.\s]/g, "").replace(",", "."));
 
-    dropdowns.forEach(d => {
-      const btn = document.getElementById(d.button);
-      const menu = document.getElementById(d.menu);
-      const selected = document.getElementById(d.selected);
-      const valor = document.getElementById(d.valorId);
-      const porcent = document.getElementById(d.porcentId);
-      const variacao = document.getElementById(d.variacaoId);
+  // Dropdowns com atualização de valores
+  const dropdowns = [
+    {
+      button: "dropdownSaldoBtn",
+      menu: "dropdownSaldo",
+      selected: "selectedPeriodoSaldo",
+      dados: dadosSaldo,
+      valorId: "saldoValor",
+      porcentId: "saldoPorcentagem",
+      variacaoId: "saldoVariacao"
+    },
+    {
+      button: "dropdownInvestBtn",
+      menu: "dropdownInvest",
+      selected: "selectedPeriodoInvest",
+      dados: dadosInvestimentos,
+      valorId: "investValor",
+      porcentId: "investPorcentagem",
+      variacaoId: "investVariacao"
+    },
+  ];
 
-      btn.addEventListener("click", () => menu.classList.toggle("hidden"));
+  dropdowns.forEach(d => {
+    const btn = document.getElementById(d.button);
+    const menu = document.getElementById(d.menu);
+    const selected = document.getElementById(d.selected);
+    const valor = document.getElementById(d.valorId);
+    const porcent = document.getElementById(d.porcentId);
+    const variacao = document.getElementById(d.variacaoId);
 
-      menu.querySelectorAll("button").forEach(option => {
-        option.addEventListener("click", () => {
-          const periodo = option.dataset.value;
-          selected.textContent = periodo;
-          menu.classList.add("hidden");
+    btn.addEventListener("click", () => menu.classList.toggle("hidden"));
 
-          // Atualiza valores do card
-          if (d.dados[periodo]) {
-            valor.textContent = d.dados[periodo].valor;
-            porcent.textContent = d.dados[periodo].porcentagem;
-            variacao.textContent = d.dados[periodo].variacao;
+    menu.querySelectorAll("button").forEach(option => {
+      option.addEventListener("click", () => {
+        const periodo = option.dataset.value;
+        selected.textContent = periodo;
+        menu.classList.add("hidden");
+
+        if (d.dados[periodo]) {
+          valor.textContent = d.dados[periodo].valor;
+          porcent.textContent = d.dados[periodo].porcentagem;
+          variacao.textContent = d.dados[periodo].variacao;
+        }
+
+        // 🟢 Se for o dropdown de investimentos, muda a cor conforme o valor
+        if (d.button === "dropdownInvestBtn") {
+          const card = valor.closest(".bg-gradient-to-l");
+          const valorAtual = parseValor(d.dados[periodo].valor);
+          const valorUltimo = parseValor(d.dados["Último mês"].valor);
+
+          const pContainer = porcent.parentElement;
+          const arrowSvg = pContainer.querySelector("svg");
+
+          card.classList.remove(
+            "border-red-600/40", "from-red-600/40",
+            "border-emerald-900/70", "from-[#23b785]/25"
+          );
+
+          if (valorAtual > valorUltimo) {
+            // 🔹 Valor subiu → estilo verde
+            card.classList.add(
+              "border-emerald-900/70",
+              "from-[#23b785]/25",
+              "bg-gradient-to-l",
+              "via-transparent",
+              "to-transparent"
+            );
+
+            valor.classList.remove("text-red-600");
+            valor.classList.add("text-emerald-400");
+
+            porcent.classList.remove("text-red-600");
+            porcent.classList.add("text-emerald-400");
+
+            variacao.classList.remove("text-red-600");
+            variacao.classList.add("text-emerald-400");
+
+            pContainer.classList.remove("text-red-600");
+            pContainer.classList.add("text-emerald-400");
+
+            if (arrowSvg) arrowSvg.classList.remove("rotate-180"); // seta pra cima
+          } else {
+            // 🔻 Valor caiu → estilo vermelho
+            card.classList.add(
+              "border-red-600/40",
+              "from-red-600/40",
+              "bg-gradient-to-l",
+              "via-transparent",
+              "to-transparent"
+            );
+
+            valor.classList.remove("text-emerald-400");
+            valor.classList.add("text-red-600");
+
+            porcent.classList.remove("text-emerald-400");
+            porcent.classList.add("text-red-600");
+
+            variacao.classList.remove("text-emerald-400");
+            variacao.classList.add("text-red-600");
+
+            pContainer.classList.remove("text-emerald-400");
+            pContainer.classList.add("text-red-600");
+
+            if (arrowSvg) arrowSvg.classList.add("rotate-180"); // seta pra baixo
           }
-        });
-      });
-
-      document.addEventListener("click", e => {
-        if (!menu.contains(e.target) && !btn.contains(e.target)) {
-          menu.classList.add("hidden");
         }
       });
     });
 
-    // Botões principais
-    document.getElementById("btnGanhos").addEventListener("click", () => { alert("Abrir modal para adicionar ganhos 💰"); });
-    document.getElementById("btnDespesas").addEventListener("click", () => { alert("Abrir modal para adicionar despesas 💸"); });
-    document.getElementById("btnInvestir").addEventListener("click", () => { alert("Abrir modal para adicionar investimentos 📈"); });
-
-    // Gráfico compacto de linha/área
-    const ctx = document.getElementById('graficoCarteira').getContext('2d');
-    const graficoCarteira = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out'],
-        datasets: [{
-          label: 'Saldo (R$)',
-          data: [14500, 15200, 15800, 16300, 16550, 16800],
-          fill: true,
-          borderColor: '#10b981',
-          backgroundColor: 'rgba(16, 185, 129, 0.15)',
-          tension: 0.4,
-          pointRadius: 3,
-          pointBackgroundColor: '#10b981',
-          pointHoverRadius: 5,
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          x: { ticks: { color: '#aaa' }, grid: { color: '#1a1a1a' } },
-          y: { ticks: { color: '#aaa' }, grid: { color: '#1a1a1a' } }
-        },
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            backgroundColor: '#0f1512',
-            borderColor: '#1c2a24',
-            borderWidth: 1,
-            titleColor: '#10b981',
-            bodyColor: '#ccc'
-          }
-        }
+    document.addEventListener("click", e => {
+      if (!menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.add("hidden");
       }
     });
-  </script>
+  });
+
+  // Botões principais
+  document.getElementById("btnGanhos").addEventListener("click", () => alert("Abrir modal para adicionar ganhos 💰"));
+  document.getElementById("btnDespesas").addEventListener("click", () => alert("Abrir modal para adicionar despesas 💸"));
+  document.getElementById("btnInvestir").addEventListener("click", () => alert("Abrir modal para adicionar investimentos 📈"));
+
+  // Gráfico
+  const ctx = document.getElementById('graficoCarteira').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out'],
+      datasets: [{
+        label: 'Saldo (R$)',
+        data: [14500, 15200, 15800, 16300, 16550, 16800],
+        fill: true,
+        borderColor: '#10b981',
+        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+        tension: 0.4,
+        pointRadius: 0,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#aaa' }, grid: { display: false } },
+        y: { ticks: { color: '#aaa' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+      }
+    }
+  });
+</script>
 
 </body>
 
