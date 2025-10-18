@@ -4,15 +4,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title class="">Minha Carteira</title>
+  <title>Minha Carteira</title>
+
+  <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
     /* --- Efeito Hover dos Cards --- */
+    /* Define uma transição suave para os cards */
     .card {
       transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
+    /* Quando passa o mouse, o card "levanta" e ganha uma sombra mais forte */
     .card:hover {
       transform: translateY(-6px);
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
@@ -21,90 +25,83 @@
     /* --- Animação de entrada (descendo + fade) --- */
     @keyframes slideFadeIn {
       0% {
+        /* Começa transparente e 20px acima */
         opacity: 0;
         transform: translateY(-20px);
       }
 
       100% {
+        /* Termina opaco e na posição original */
         opacity: 1;
         transform: translateY(0);
       }
     }
 
+    /* Classe que aplica a animação */
     .animate-slide-fade {
-      opacity: 0;
-      animation: slideFadeIn 0.6s ease-out forwards;
+      opacity: 0; /* Começa transparente */
+      animation: slideFadeIn 0.6s ease-out forwards; /* Executa a animação */
     }
 
-    /* Delays para o efeito em cascata */
-    .delay-1 {
-      animation-delay: 0.1s;
-    }
-
-    .delay-2 {
-      animation-delay: 0.2s;
-    }
-
-    .delay-3 {
-      animation-delay: 0.3s;
-    }
-
-    .delay-4 {
-      animation-delay: 0.4s;
-    }
-
-    .delay-5 {
-      animation-delay: 0.5s;
-    }
+    /* --- Delays para efeito em cascata --- */
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
   </style>
 
+  <!-- Chart.js via CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="bg-[#000805] text-gray-200 font-sans min-h-screen flex flex-col items-center py-8">
 
+  <!-- Container principal centralizado -->
   <div class="w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-    <!-- Título -->
-    <h1
-      class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 text-gray-300 animate-slide-fade delay-1 text-center md:text-left ">
-      Minha Carteira</h1>
 
-    <!-- Cards superiores -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
+    <!-- Título da página -->
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 text-gray-300 animate-slide-fade delay-1 text-center md:text-left">
+      Minha Carteira
+    </h1>
 
-      <!-- Saldo -->
-      <div class="card rounded-4xl animate-slide-fade delay-2">
-        <div
-          class="bg-gradient-to-l from-[#23b785]/25 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-emerald-900/70 shadow-lg border-r-4">
+    <!-- Grid com cards principais: Saldo e Investimentos -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10 relative">
+
+      <!-- Card Saldo -->
+      <div class="card rounded-4xl animate-slide-fade delay-2 relative z-10">
+        <div class="bg-gradient-to-l from-[#23b785]/25 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-emerald-900/100 ">
+          
+          <!-- Cabeçalho do card com título e dropdown -->
           <div class="flex justify-between items-center mb-3 relative p-4">
-            <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30
-               bg-clip-text text-transparent animate-gradient-x text-gray-300 mb-2">Saldo</h2>
+            <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-transparent text-gray-300 mb-2">
+              Saldo
+            </h2>
 
-            <!-- Dropdown -->
+            <!-- Dropdown para selecionar período -->
             <div class="relative">
               <button id="dropdownSaldoBtn" class="text-gray-400 text-sm flex items-center gap-1 cursor-pointer">
                 <span id="selectedPeriodoSaldo">Este mês</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div id="dropdownSaldo"
-                class="hidden absolute right-0 mt-2 bg-[#0d1a15] rounded-md shadow-lg border border-[#1f5b46] z-10">
-                <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Este mês">Este
-                  mês</button>
-                <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Último mês">Último
-                  mês</button>
-                <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Últimos 3 meses">Últimos
-                  3 meses</button>
+
+              <!-- Lista do dropdown -->
+              <div id="dropdownSaldo" class="hidden absolute right-0 mt-2 bg-[#0d1a15] rounded-md shadow-lg border border-[#1f5b46] z-50 min-w-[160px]">
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Este mês">Este mês</button>
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Último mês">Último mês</button>
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Últimos 3 meses">Últimos 3 meses</button>
               </div>
             </div>
           </div>
 
-          <p class="text-3xl sm:text-4xl md:text-5xl font-bold text-emerald-400 mb-2" id="saldoValor">R$16.550,00</p>
+          <!-- Valores do saldo -->
+          <p class="text-3xl sm:text-4xl md:text-5xl font-bold text-emerald-400 mb-2" id="saldoValor">
+            R$16.550,00
+          </p>
           <p class="text-emerald-400 text-xs sm:text-sm flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
             <span id="saldoPorcentagem">14%</span>
@@ -112,40 +109,39 @@
           </p>
         </div>
       </div>
-
-      <!-- Investimentos -->
-      <div class="card rounded-4xl animate-slide-fade delay-2">
-        <div
-          class="bg-gradient-to-l from-red-600/40 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-red-600/40 shadow-lg">
+    
+      <!-- Card Investimentos -->
+      <div class="card rounded-4xl animate-slide-fade delay-2 relative z-10">
+        <div class="bg-gradient-to-l from-red-600/40 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-red-600/100 shadow-lg transition-all duration-300 ease-in-out">
+          
+          <!-- Cabeçalho do card com título e dropdown -->
           <div class="flex justify-between items-center mb-3 relative p-4">
-            <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30
-               bg-clip-text text-transparent animate-gradient-x text-gray-300 mb-2">Investimentos</h2>
+            <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-transparent text-gray-300 mb-2">
+              Investimentos
+            </h2>
 
             <!-- Dropdown -->
             <div class="relative">
               <button id="dropdownInvestBtn" class="text-gray-400 text-sm flex items-center gap-1 cursor-pointer">
                 <span id="selectedPeriodoInvest">Este mês</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div id="dropdownInvest"
-                class="hidden absolute right-0 mt-2 bg-[#1a0f0f] rounded-md shadow-lg border border-[#5a1717] z-10">
-                <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Este mês">Este
-                  mês</button>
-                <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Último mês">Último
-                  mês</button>
-                <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Últimos 3 meses">Últimos
-                  3 meses</button>
+
+              <!-- Lista do dropdown -->
+              <div id="dropdownInvest" class="hidden absolute right-0 mt-2 bg-[#1a0f0f] rounded-md shadow-lg border border-[#5a1717] z-50 min-w-[160px]">
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Este mês">Este mês</button>
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Último mês">Último mês</button>
+                <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Últimos 3 meses">Últimos 3 meses</button>
               </div>
             </div>
           </div>
 
-          <p class="text-3xl sm:text-4xl md:text-5xl font-bold text-red-600 mb-2" id="investValor">R$177.650,00</p>
-          <p class="text-red-600 text-xs sm:text-sm flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 rotate-180" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
+          <!-- Valores de investimentos -->
+          <p class="text-3xl sm:text-4xl md:text-5xl font-bold text-red-600 mb-2 transition-colors duration-300 ease-in-out" id="investValor">R$177.650,00</p>
+          <p class="text-red-600 text-xs sm:text-sm flex items-center gap-2 transition-colors duration-300 ease-in-out">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 rotate-180 transition-transform duration-300 ease-in-out" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
             <span id="investPorcentagem">-7,5%</span>
@@ -153,226 +149,268 @@
           </p>
         </div>
       </div>
-
     </div>
 
-    <!-- Cards inferiores -->
+    <!-- Grid com cards menores: Ganhos, Despesas, Investir -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 animate-slide-fade delay-5 mb-12">
-      <!-- Ganhos -->
-      <div class="bg-[#ffffff]/7 rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left">
-        <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30
-           bg-clip-text text-transparent animate-gradient-x text-gray-300 mb-2">Ganhos</h2>
-        <p class="text-gray-400 mb-4 sm:mb-6">Registre aqui todas as suas entradas</p>
-        <button id="btnGanhos"
-          class="bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3 rounded-lg">
-          Adicionar Ganhos
-        </button>
-      </div>
+      
+      <!-- Card Ganhos -->
+<div class="bg-[#131917] rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left">
+  <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-transparent text-gray-300 mb-2">Ganhos</h2>
+  <p class="text-gray-400 mb-4 sm:mb-6">Registre aqui todas as suas entradas</p>
 
-      <!-- Despesas -->
-      <div class="bg-[#ffffff]/7 rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left">
-        <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30
-           bg-clip-text text-transparent animate-gradient-x text-gray-300 mb-2">Despesas</h2>
-        <p class="text-gray-400 mb-4 sm:mb-6">Registre aqui todas as suas despesas</p>
-        <button id="btnDespesas"
-          class="bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3 rounded-lg">
-          Adicionar Despesas
-        </button>
-      </div>
+  <!-- Botão com borda gradiente -->
+  <div class="rounded-lg p-[2px] bg-gradient-to-r from-[#23b785]/25 to-[#23b785]/25 inline-block">
+    <button id="btnGanhos" class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
+      Adicionar Ganhos
+    </button>
+  </div>
+</div>
 
-      <!-- Investir -->
-      <div class="bg-[#ffffff]/10 rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left">
-        <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30
-           bg-clip-text text-transparent animate-gradient-x text-gray-300 mb-2">Investir</h2>
-        <p class="text-gray-400 mb-4 sm:mb-6">Registre aqui todos os seus investimentos</p>
-        <button id="btnInvestir"
-          class="bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3 rounded-lg">
-          Adicionar Investimentos
-        </button>
-      </div>
-    </div>
+
+      <!-- Card Despesas -->
+<div class="bg-[#131917] rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left">
+  <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-transparent text-gray-300 mb-2">Despesas</h2>
+  <p class="text-gray-400 mb-4 sm:mb-6">Registre aqui todas as suas despesas</p>
+
+  <!-- Botão com borda gradiente -->
+  <div class="rounded-lg p-[2px] bg-gradient-to-r from-[#23b785]/25 to-[#23b785]/25 inline-block">
+    <button id="btnDespesas" class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
+      Adicionar Despesas
+    </button>
+  </div>
+</div>
+
+      <!-- Card Investir -->
+<div class="bg-[#131917] rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left">
+  <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-transparent text-gray-300 mb-2">Investir</h2>
+  <p class="text-gray-400 mb-4 sm:mb-6">Registre aqui todos os seus investimentos</p>
+  
+  <!-- Botão com borda gradiente -->
+  <div class="rounded-lg p-[2px] bg-gradient-to-r from-[#23b785]/25 to-[#23b785]/25 inline-block">
+    <button id="btnInvestir" class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
+      Adicionar Investimentos
+    </button>
+  </div>
+</div>
+
+
   </div>
 
-  <!-- Gráfico de área totalmente horizontal -->
+  <!-- Seção do gráfico Evolução da Carteira -->
   <div class="animate-slide-fade delay-4 mb-12 flex justify-center">
-    <div
-      class="bg-[#ffffff]/7 border border-[#1c2a24] rounded-3xl shadow-md p-6 w-full max-w-[1400px] flex flex-row items-center gap-8">
-      <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30
-           bg-clip-text text-transparent animate-gradient-x text-gray-300 mb-2">
+    <div class="bg-[#ffffff]/7 border border-[#1c2a24] rounded-3xl shadow-md p-6 w-full max-w-[1400px] flex flex-row items-center gap-8">
+      <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-transparent text-gray-300 mb-2">
         Evolução da Carteira
       </h2>
       <div class="w-3/4 h-[300px]">
+        <!-- Canvas para Chart.js -->
         <canvas id="graficoCarteira"></canvas>
       </div>
     </div>
   </div>
 
-  <!-- Scripts JS -->
+</body>
+</html>
+
   <script>
-  // Valores simulados para cada período
-  const dadosSaldo = {
-    "Este mês": { valor: "R$16.550,00", porcentagem: "14%", variacao: "+R$2.576,00 este mês" },
-    "Último mês": { valor: "R$14.980,00", porcentagem: "10%", variacao: "+R$1.500,00 último mês" },
-    "Últimos 3 meses": { valor: "R$45.200,00", porcentagem: "8%", variacao: "+R$3.350,00 últimos 3 meses" }
-  };
+    // --- Dados "Fake" para simulação ---
+    // Dados para o card de Saldo
+    const dadosSaldo = {
+      "Este mês": { valor: "R$16.550,00", porcentagem: "14%", variacao: "+R$2.576,00 este mês" },
+      "Último mês": { valor: "R$14.980,00", porcentagem: "10%", variacao: "+R$1.500,00 último mês" },
+      "Últimos 3 meses": { valor: "R$45.200,00", porcentagem: "8%", variacao: "+R$3.350,00 últimos 3 meses" }
+    };
 
-  const dadosInvestimentos = {
-    "Este mês": { valor: "R$177.650,00", porcentagem: "-7,5%", variacao: "neste mês" },
-    "Último mês": { valor: "R$180.000,00", porcentagem: "-2%", variacao: "último mês" },
-    "Últimos 3 meses": { valor: "R$185.500,00", porcentagem: "+3,2%", variacao: "últimos 3 meses" }
-  };
+    // Dados para o card de Investimentos
+    const dadosInvestimentos = {
+      "Este mês": { valor: "R$177.650,00", porcentagem: "-7,5%", variacao: "neste mês" },
+      "Último mês": { valor: "R$180.000,00", porcentagem: "-2%", variacao: "último mês" },
+      "Últimos 3 meses": { valor: "R$185.500,00", porcentagem: "+3,2%", variacao: "últimos 3 meses" }
+    };
 
-  // Função pra converter "R$177.650,00" em número
-  const parseValor = (str) => Number(str.replace(/[R$\.\s]/g, "").replace(",", "."));
+    // --- Função Auxiliar ---
+    // Converte uma string "R$ 1.234,56" para um número 1234.56
+    const parseValor = (str) => Number(str.replace(/[R$\.\s]/g, "").replace(",", "."));
 
-  // Dropdowns com atualização de valores
-  const dropdowns = [
-    {
-      button: "dropdownSaldoBtn",
-      menu: "dropdownSaldo",
-      selected: "selectedPeriodoSaldo",
-      dados: dadosSaldo,
-      valorId: "saldoValor",
-      porcentId: "saldoPorcentagem",
-      variacaoId: "saldoVariacao"
-    },
-    {
-      button: "dropdownInvestBtn",
-      menu: "dropdownInvest",
-      selected: "selectedPeriodoInvest",
-      dados: dadosInvestimentos,
-      valorId: "investValor",
-      porcentId: "investPorcentagem",
-      variacaoId: "investVariacao"
-    },
-  ];
+    // --- Configuração dos Dropdowns ---
+    // Array de objetos para configurar os dois dropdowns (evita repetir código)
+    const dropdowns = [
+      {
+        button: "dropdownSaldoBtn",      // ID do botão
+        menu: "dropdownSaldo",          // ID do menu
+        selected: "selectedPeriodoSaldo", // ID do <span> que mostra o texto selecionado
+        dados: dadosSaldo,              // Objeto de dados a usar
+        valorId: "saldoValor",          // ID do elemento <p> do valor
+        porcentId: "saldoPorcentagem",  // ID do <span> da porcentagem
+        variacaoId: "saldoVariacao"     // ID do <span> da variação
+      },
+      {
+        button: "dropdownInvestBtn",
+        menu: "dropdownInvest",
+        selected: "selectedPeriodoInvest",
+        dados: dadosInvestimentos,
+        valorId: "investValor",
+        porcentId: "investPorcentagem",
+        variacaoId: "investVariacao"
+      },
+    ];
 
-  dropdowns.forEach(d => {
-    const btn = document.getElementById(d.button);
-    const menu = document.getElementById(d.menu);
-    const selected = document.getElementById(d.selected);
-    const valor = document.getElementById(d.valorId);
-    const porcent = document.getElementById(d.porcentId);
-    const variacao = document.getElementById(d.variacaoId);
+    // --- Lógica Principal dos Dropdowns ---
+    // Itera sobre cada configuração de dropdown
+    dropdowns.forEach(d => {
+      // Pega os elementos do HTML usando os IDs da configuração
+      const btn = document.getElementById(d.button);
+      const menu = document.getElementById(d.menu);
+      const selected = document.getElementById(d.selected);
+      const valor = document.getElementById(d.valorId);
+      const porcent = document.getElementById(d.porcentId);
+      const variacao = document.getElementById(d.variacaoId);
 
-    btn.addEventListener("click", () => menu.classList.toggle("hidden"));
+      // Adiciona o evento de clique no BOTÃO PRINCIPAL (ex: "Este mês")
+      btn.addEventListener("click", () => menu.classList.toggle("hidden")); // Mostra/esconde o menu
 
-    menu.querySelectorAll("button").forEach(option => {
-      option.addEventListener("click", () => {
-        const periodo = option.dataset.value;
-        selected.textContent = periodo;
-        menu.classList.add("hidden");
+      // Adiciona o evento de clique em CADA OPÇÃO DENTRO DO MENU
+      menu.querySelectorAll("button").forEach(option => {
+        option.addEventListener("click", () => {
+          // Pega o valor da opção (ex: "Último mês")
+          const periodo = option.dataset.value;
+          
+          // Atualiza o texto do botão principal
+          selected.textContent = periodo;
+          
+          // Esconde o menu
+          menu.classList.add("hidden");
 
-        if (d.dados[periodo]) {
-          valor.textContent = d.dados[periodo].valor;
-          porcent.textContent = d.dados[periodo].porcentagem;
-          variacao.textContent = d.dados[periodo].variacao;
-        }
-
-        // 🟢 Se for o dropdown de investimentos, muda a cor conforme o valor
-        if (d.button === "dropdownInvestBtn") {
-          const card = valor.closest(".bg-gradient-to-l");
-          const valorAtual = parseValor(d.dados[periodo].valor);
-          const valorUltimo = parseValor(d.dados["Último mês"].valor);
-
-          const pContainer = porcent.parentElement;
-          const arrowSvg = pContainer.querySelector("svg");
-
-          card.classList.remove(
-            "border-red-600/40", "from-red-600/40",
-            "border-emerald-900/70", "from-[#23b785]/25"
-          );
-
-          if (valorAtual > valorUltimo) {
-            // 🔹 Valor subiu → estilo verde
-            card.classList.add(
-              "border-emerald-900/70",
-              "from-[#23b785]/25",
-              "bg-gradient-to-l",
-              "via-transparent",
-              "to-transparent"
-            );
-
-            valor.classList.remove("text-red-600");
-            valor.classList.add("text-emerald-400");
-
-            porcent.classList.remove("text-red-600");
-            porcent.classList.add("text-emerald-400");
-
-            variacao.classList.remove("text-red-600");
-            variacao.classList.add("text-emerald-400");
-
-            pContainer.classList.remove("text-red-600");
-            pContainer.classList.add("text-emerald-400");
-
-            if (arrowSvg) arrowSvg.classList.remove("rotate-180"); // seta pra cima
-          } else {
-            // 🔻 Valor caiu → estilo vermelho
-            card.classList.add(
-              "border-red-600/40",
-              "from-red-600/40",
-              "bg-gradient-to-l",
-              "via-transparent",
-              "to-transparent"
-            );
-
-            valor.classList.remove("text-emerald-400");
-            valor.classList.add("text-red-600");
-
-            porcent.classList.remove("text-emerald-400");
-            porcent.classList.add("text-red-600");
-
-            variacao.classList.remove("text-emerald-400");
-            variacao.classList.add("text-red-600");
-
-            pContainer.classList.remove("text-emerald-400");
-            pContainer.classList.add("text-red-600");
-
-            if (arrowSvg) arrowSvg.classList.add("rotate-180"); // seta pra baixo
+          // Atualiza os textos (Valor, Porcentagem, Variação) com base nos dados "fake"
+          if (d.dados[periodo]) {
+            valor.textContent = d.dados[periodo].valor;
+            porcent.textContent = d.dados[periodo].porcentagem;
+            variacao.textContent = d.dados[periodo].variacao;
           }
+
+          // --- A MÁGICA ACONTECE AQUI: Lógica de cor SÓ para Investimentos ---
+          if (d.button === "dropdownInvestBtn") {
+            // Pega os elementos necessários para a lógica
+            const card = valor.closest(".bg-gradient-to-l"); // Pega o 'pai' do card
+            const valorAtual = parseValor(d.dados[periodo].valor);
+            const valorUltimo = parseValor(d.dados["Último mês"].valor); // Referência fixa
+
+            const pContainer = porcent.parentElement; // O <p> que segura a seta e os textos
+            const arrowSvg = pContainer.querySelector("svg"); // A seta
+            const menuOptions = menu.querySelectorAll("button"); // Os botões DENTRO do menu
+
+            // --- 1. Limpeza ---
+            // Limpa as classes de cor anteriores do CARD
+            card.classList.remove(
+              "border-red-600/40", "from-red-600/40",    // Classes vermelhas
+              "border-emerald-900/70", "from-[#23b785]/25" // Classes verdes
+            );
+
+            // Limpa as classes de cor anteriores do MENU
+            menu.classList.remove(
+              "bg-[#1a0f0f]", "border-[#5a1717]", // Classes vermelhas
+              "bg-[#0d1a15]", "border-[#1f5b46]"  // Classes verdes
+            );
+
+            // --- 2. Aplica as cores (Condicional) ---
+            if (valorAtual > valorUltimo) {
+              // 📈 SUBIU (VERDE)
+              
+              // Aplica classes verdes ao CARD
+              card.classList.add("border-emerald-900/70", "from-[#23b785]/25", "bg-gradient-to-l", "via-transparent", "to-transparent");
+              
+              // Aplica classes verdes ao MENU
+              menu.classList.add("bg-[#0d1a15]", "border-[#1f5b46]");
+
+              // Muda o HOVER das OPÇÕES do menu para verde
+              menuOptions.forEach(opt => {
+                opt.classList.remove("hover:bg-[#301010]"); // Remove hover vermelho
+                opt.classList.add("hover:bg-[#123124]");    // Adiciona hover verde
+              });
+
+              // Muda as cores dos TEXTOS para verde
+              valor.classList.replace("text-red-600", "text-emerald-400");
+              porcent.classList.replace("text-red-600", "text-emerald-400");
+              variacao.classList.replace("text-red-600", "text-emerald-400");
+              pContainer.classList.replace("text-red-600", "text-emerald-400");
+
+              // Garante que a SETA aponte para cima (remove a rotação)
+              if (arrowSvg) arrowSvg.classList.remove("rotate-180");
+
+            } else {
+              // 🔻 CAIU (VERMELHO)
+              
+              // Aplica classes vermelhas ao CARD
+              card.classList.add("border-red-600/40", "from-red-600/40", "bg-gradient-to-l", "via-transparent", "to-transparent");
+              
+              // Aplica classes vermelhas ao MENU
+              menu.classList.add("bg-[#1a0f0f]", "border-[#5a1717]");
+
+              // Muda o HOVER das OPÇÕES do menu para vermelho
+              menuOptions.forEach(opt => {
+                opt.classList.remove("hover:bg-[#123124]");  // Remove hover verde
+                opt.classList.add("hover:bg-[#301010]");    // Adiciona hover vermelho
+              });
+
+              // Muda as cores dos TEXTOS para vermelho
+              valor.classList.replace("text-emerald-400", "text-red-600");
+              porcent.classList.replace("text-emerald-400", "text-red-600");
+              variacao.classList.replace("text-emerald-400", "text-red-600");
+              pContainer.classList.replace("text-emerald-400", "text-red-600");
+
+              // Garante que a SETA aponte para baixo (adiciona a rotação)
+              if (arrowSvg) arrowSvg.classList.add("rotate-180");
+            }
+          }
+        });
+      });
+
+      // --- Lógica para fechar o dropdown ao clicar fora ---
+      document.addEventListener("click", e => {
+        // Se o clique NÃO foi no menu E NÃO foi no botão
+        if (!menu.contains(e.target) && !btn.contains(e.target)) {
+          menu.classList.add("hidden"); // Esconde o menu
         }
       });
     });
 
-    document.addEventListener("click", e => {
-      if (!menu.contains(e.target) && !btn.contains(e.target)) {
-        menu.classList.add("hidden");
+    // --- Botões de Ação (Ganhos, Despesas, Investir) ---
+    // Apenas mostram um alerta por enquanto
+    document.getElementById("btnGanhos").addEventListener("click", () => alert("Abrir modal para adicionar ganhos 💰"));
+    document.getElementById("btnDespesas").addEventListener("click", () => alert("Abrir modal para adicionar despesas 💸"));
+    document.getElementById("btnInvestir").addEventListener("click", () => alert("Abrir modal para adicionar investimentos 📈"));
+
+    // --- Configuração do Gráfico (Chart.js) ---
+    // Pega o "contexto" 2D do canvas
+    const ctx = document.getElementById('graficoCarteira').getContext('2d');
+    
+    // Cria um novo gráfico
+    new Chart(ctx, {
+      type: 'line', // Tipo de gráfico: linha
+      data: {
+        labels: ['Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out'], // Rótulos do eixo X
+        datasets: [{
+          label: 'Saldo (R$)',
+          data: [14500, 15200, 15800, 16300, 16550, 16800], // Dados do eixo Y
+          fill: true, // Preencher a área abaixo da linha
+          borderColor: '#10b981', // Cor da linha (verde)
+          backgroundColor: 'rgba(16, 185, 129, 0.1)', // Cor do preenchimento (verde transparente)
+          tension: 0.4, // Deixa a linha curvada
+          
+        }]
+      },
+      options: {
+        responsive: true, // Torna o gráfico responsivo
+        plugins: { legend: { display: false } }, // Esconde a legenda
+        scales: {
+          // Estilização do eixo X
+          x: { ticks: { color: '#aaa' }, grid: { display: false } },
+          // Estilização do eixo Y
+          y: { ticks: { color: '#aaa' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+        }
       }
     });
-  });
-
-  // Botões principais
-  document.getElementById("btnGanhos").addEventListener("click", () => alert("Abrir modal para adicionar ganhos 💰"));
-  document.getElementById("btnDespesas").addEventListener("click", () => alert("Abrir modal para adicionar despesas 💸"));
-  document.getElementById("btnInvestir").addEventListener("click", () => alert("Abrir modal para adicionar investimentos 📈"));
-
-  // Gráfico
-  const ctx = document.getElementById('graficoCarteira').getContext('2d');
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out'],
-      datasets: [{
-        label: 'Saldo (R$)',
-        data: [14500, 15200, 15800, 16300, 16550, 16800],
-        fill: true,
-        borderColor: '#10b981',
-        backgroundColor: 'rgba(16, 185, 129, 0.1)',
-        tension: 0.4,
-        pointRadius: 0,
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { ticks: { color: '#aaa' }, grid: { display: false } },
-        y: { ticks: { color: '#aaa' }, grid: { color: 'rgba(255,255,255,0.05)' } }
-      }
-    }
-  });
-</script>
-
-</body>
-
+  </script>
+  </body>
 </html>
